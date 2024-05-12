@@ -2,23 +2,16 @@
 // let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
+const taskDisplayEl = $('#task-display');
+const taskFormEl = $('#task-form');
+
+
 const toDoInputEl = $('#to-do-input');
 const inProgressInputEl = $('#in-progress-input');
 const doneInputEl = $('#done-input');
 
 
-const toDo = toDoInputEl.val();
-const inProgress = inProgressInputEl.val();
-const done = doneInputEl.val();
 
-
-const generateTasks = {
-    name: toDo,
-    status: inProgress,
-    completion: done,
-    status: 'to-do',
-   
-};
 
 
 
@@ -120,6 +113,21 @@ function handleDeleteTask(){
     printTaskData();
 }
 
+function handleTaskFormSubmit(event) {
+    event.preventDefault();
+
+    const toDo = toDoInputEl.val();
+const inProgress = inProgressInputEl.val();
+const done = doneInputEl.val();
+
+
+const generateTasks = {
+    name: toDo,
+    status: inProgress,
+    completion: done,
+    status: 'to-do',
+   
+};
 
 
 const tasks = readTasksFromStorage();
@@ -129,15 +137,43 @@ saveTasksToStorage(tasks);
 
 printTaskData();
 
-function handleTaskFormSubmit(event) {
-    event.preventDefault();
+toDoInputEl.val('');
+inProgressInputEl.val('');
+doneInputEl.val('');
+
 }
 
+function handleDrop(event, ui) {
+    const tasks = readTasksFromStorage();
+    const taskId = ui.draggable[0].dataset.taskId;
+    const newStatus = event.target.id;
+    for (let task of tasks) {
+        if (task.id === taskId) {
+            task.status = newStatus;
+        }
+    }
 
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    printTaskData();
+}
+
+taskFormEl.on('submit', handleTaskFormSubmit);
+taskDisplayEl.on('click', '.btn-delete-task', handleDeleteTask);
+$(document).ready(function(){
+    printTaskData();
+    $('#taskDueDate').datepicker({
+        changeMonth: true,
+        changeYear: true,
+    });
+
+    $('.lane').droppable({
+        accept: '.draggable', drop: handleDrop,
+    });
+});
 // Todo: create a function to generate a unique task id
-function generateTaskId() {
+// function generateTaskId() {
 
-}
+// }
 
 
 
@@ -145,31 +181,31 @@ function generateTaskId() {
 
 
 // Todo: create a function to create a task card
-function createTaskCard(task) {
+// function createTaskCard(task) {
 
-}
+// }
 
 // Todo: create a function to render the task list and make cards draggable
-function renderTaskList() {
+// function renderTaskList() {
 
-}
+// }
 
 // Todo: create a function to handle adding a new task
-function handleAddTask(event){
+// function handleAddTask(event){
 
-}
+// }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(event){
+// function handleDeleteTask(event){
 
-}
+// }
 
 // Todo: create a function to handle dropping a task into a new status lane
-function handleDrop(event, ui) {
+// function handleDrop(event, ui) {
 
-}
+// }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-$(document).ready(function () {
+// $(document).ready(function () {
 
-});
+// });
