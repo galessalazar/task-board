@@ -12,24 +12,31 @@ const taskNameInputEl = $('#task-name-input');
 const projectTypeInputEl = $('#project-type-input');
 const projectDateInputEl = $('#taskDueDate');
 
-function createModalCard(modal) {
-    const modalCard =$('<div>')
-.attr('data-task-id', myInput.id);
-const myModal = document.getElementsByClassName('modal')
-const myInput = document.getElementsByClassName('modal-content')
-const btnSuccess = $('<button>').addClass('btn btn-success add task').text('Add Task').attr('data-task-id', modal.id);
-btnSuccess.on('click', modal.id);
-modal.addEventListener('shown.bs.modal', () => {
-  myInput.focus()
-})
+// function createModalCard(modal) {
+//     const modalCard =$('<div>')
+// .attr('data-task-id', myInput.id);
+// const myModal = document.getElementsByClassName('modal')
+// const myInput = document.getElementsByClassName('modal-content')
+// const btnSuccess = $('<button>').addClass('btn btn-success add task').text('Add Task').attr('data-task-id', modal.id);
+// btnSuccess.on('click', modal.id);
+// const modal = document.getElementById('formModal')
+// formModal.addEventListener.on('hidden.bs.modal',
+//    focus
+// )
 
-document.querySelectorAll('.btn').forEach(buttonElement => {
-    const button = bootstrap.Button.getOrCreateInstance(buttonElement)
-    button.toggle()
-  })
+// document.querySelectorAll('.btn').forEach(buttonElement => {
+//     const button = bootstrap.Button.getOrCreateInstance(buttonElement)
+//     button.toggle()
+//   })
 
-}
+// }
 
+const myModalEl = document.getElementById('btn-success')
+myModalEl.addEventListener('hide.bs.modal',  {funtion() {
+ document.getElementById('btn-success').innerHTML = 'hello';
+    // do something...   
+};)
+  
 
 
 
@@ -47,7 +54,10 @@ function readTasksFromStorage() {
 function saveTasksToStorage(tasks) {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
+// Todo: create a function to generate a unique task id
+// function generateTaskId() {
 
+// }
 // started using singular task here not sure why
 function createTaskCard(task) {
     const taskCard = $('<div>')
@@ -142,16 +152,20 @@ function handleTaskFormSubmit(event) {
 const inProgress = inProgressInputEl.val();
 const done = doneInputEl.val();
 
-
-const generateTasks = {
+function generateTaskId(){
+    
+    
+const generateTaskId = {
+    
     name: taskName,
     status: projectType,
     completion: projectDate,
     status: 'to-do',
    
+    generateTaskId,
 };
 
-
+}
 const tasks = readTasksFromStorage();
 tasks.push(generateTasks);
 
@@ -195,10 +209,7 @@ $(document).ready(function () {
 
 
 
-// Todo: create a function to generate a unique task id
-// function generateTaskId() {
 
-// }
 
 
 
