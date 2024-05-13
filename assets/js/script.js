@@ -31,14 +31,19 @@ const projectDateInputEl = $('#taskDueDate');
 
 // }
 
-const myModalEl = document.getElementById('btn-success')
-myModalEl.addEventListener('hide.bs.modal',  {funtion() {
- document.getElementById('btn-success').innerHTML = 'hello';
-    // do something...   
-};)
+// const myModalEl = document.getElementById('#formModal')
+// myModalEl.addEventListener('show.bs.modal',  {funtion() {
+//  document.getElementById('#formModal').innerHTML = 'hello';
+//     // do something...   
+// };)
   
 
+const formModal = document.getElementById('#formModal')
+const modalContent = document.getElementById('.modal-content')
 
+formModal.addEventListener('shown.bs.modal', () => {
+  modalContent.focus()
+})
 
 
 
