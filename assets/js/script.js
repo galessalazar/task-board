@@ -1,17 +1,34 @@
 // Retrieve tasks and nextId from localStorage
-// let taskList = JSON.parse(localStorage.getItem("tasks"));
+let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 const taskDisplayEl = $('#task-display');
 const taskFormEl = $('#task-form');
-
-
 const toDoInputEl = $('#to-do-input');
 const inProgressInputEl = $('#in-progress-input');
 const doneInputEl = $('#done-input');
 
+const taskNameInputEl = $('#task-name-input');
+const projectTypeInputEl = $('#project-type-input');
+const projectDateInputEl = $('#taskDueDate');
 
+function createModalCard(modal) {
+    const modalCard =$('<div>')
+.attr('data-task-id', myInput.id);
+const myModal = document.getElementsByClassName('modal')
+const myInput = document.getElementsByClassName('modal-content')
+const btnSuccess = $('<button>').addClass('btn btn-success add task').text('Add Task').attr('data-task-id', modal.id);
+btnSuccess.on('click', modal.id);
+modal.addEventListener('shown.bs.modal', () => {
+  myInput.focus()
+})
 
+document.querySelectorAll('.btn').forEach(buttonElement => {
+    const button = bootstrap.Button.getOrCreateInstance(buttonElement)
+    button.toggle()
+  })
+
+}
 
 
 
@@ -75,7 +92,7 @@ function printTaskData() {
 
     for (let task of tasks) {
         if (task.status === 'to-do') {
-            todoList.append(createTaskCard(task));
+            toDoList.append(createTaskCard(task));
         } else if (task.status === 'in-progress') {
             inProgressList.append(createTaskCard(task));
         } else if (task.status === 'done') {
@@ -104,7 +121,8 @@ function handleDeleteTask(){
     const tasks = readTasksFromStorage();
 
     tasks.forEach((tasks) => {
-        if (task.id === taskId) {
+        // error made me pluralize tasks for some reason (tasks.splice)
+        if (tasks.id === taskId) {
             tasks.splice(tasks.indexOf(task), 1);
         }
     });
@@ -116,15 +134,19 @@ function handleDeleteTask(){
 function handleTaskFormSubmit(event) {
     event.preventDefault();
 
+    const taskNameInputEl = taskNameInputEl.val().trim();
+    const projectType = projectTypeInputEl.val();
+    const projectDate = projectDateInputEl.val();
+// i may need to delete these 3 lines below
     const toDo = toDoInputEl.val();
 const inProgress = inProgressInputEl.val();
 const done = doneInputEl.val();
 
 
 const generateTasks = {
-    name: toDo,
-    status: inProgress,
-    completion: done,
+    name: taskName,
+    status: projectType,
+    completion: projectDate,
     status: 'to-do',
    
 };
@@ -159,7 +181,7 @@ function handleDrop(event, ui) {
 
 taskFormEl.on('submit', handleTaskFormSubmit);
 taskDisplayEl.on('click', '.btn-delete-task', handleDeleteTask);
-$(document).ready(function(){
+$(document).ready(function () {
     printTaskData();
     $('#taskDueDate').datepicker({
         changeMonth: true,
@@ -170,6 +192,9 @@ $(document).ready(function(){
         accept: '.draggable', drop: handleDrop,
     });
 });
+
+
+
 // Todo: create a function to generate a unique task id
 // function generateTaskId() {
 
