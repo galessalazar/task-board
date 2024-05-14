@@ -38,12 +38,7 @@ const projectDateInputEl = $('#taskDueDate');
 // };)
   
 
-const formModal = document.getElementById('#formModal')
-const modalContent = document.getElementById('.modal-content')
 
-formModal.addEventListener('shown.bs.modal', () => {
-  modalContent.focus()
-})
 
 
 
@@ -66,7 +61,12 @@ function saveTasksToStorage(tasks) {
 // started using singular task here not sure why
 function createTaskCard(task) {
     const taskCard = $('<div>')
+// const formModal = document.getElementById('#formModal')
+// const modalContent = document.getElementById('.modal-content')
 
+// formModal.addEventListener('shown.bs.modal', () => {
+//   modalContent.focus()
+// })
     // i think the my-3 is the spacing in bootstrap
     .addClass('card task-card draggable my -3')
     .attr('data-task-id', task.id);

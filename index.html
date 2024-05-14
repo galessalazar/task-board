@@ -21,19 +21,21 @@
     <h1 class="display-3">Task Board</h1>
     <p class="lead">A simple Kanban board for task management</p>
   </header>
+<section class="bg-light">
   <div class="container">
     <div class="text-center mb-5">
-       <button type= 'button' class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
-    </div> 
+      <!-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button> -->
+    </div>
+  </section>
 
-  <div class="btn-success" tabindex="-1" role="dialog" data-target="#formModal">
-      <div class="modal-dialog" role="document">
+  <div class="modal" data-bs-target="formModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true"></div>
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Add Task</h5>
+            <h5 class="modal-title" id="modal-title">Add Task</h5>
             
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> -->
+              <!-- <span aria-hidden="true">&times;</span> -->
             </button>
             <!-- <form id="task-form">
               <ul class="list-group list-group-flush">
@@ -47,23 +49,25 @@
               </ul> -->
           </div>
           <div class="modal-body">
-            <p>Task Description</p>
+            <form id="task-form">
+            
+            <label for="task-info" class="form-label">Title</label>
+            <input type="text" class="form-control" id="task-title" placeholder="Your-task-Description">
+            
+            
+            <label for="due-date" class="form-label">Due Date</label>
+            <input type="text" class="form-control" id="due-date" placeholder="Your-task-Description">
+
+            
+            <label for="task-description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="task-info" placeholder="Your-task-Description">
+            </form>
           </div>
-          <!-- <form id="task-form">
-            <ul class="list-group list-group-flush">
-              <li class="'list-group-item">
-                <input id="task-name-input"
-                type="text"
-                class="form-control"
-                placeholder="Task Name"
-                aria-label="Task Name"
-                />
-            </ul> -->
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save changes</button>
-          <!-- </form> -->
+         
           </div>
           
         </div>
