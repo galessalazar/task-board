@@ -1,81 +1,44 @@
 // Retrieve tasks and nextId from localStorage
-let taskList = JSON.parse(localStorage.getItem("tasks"));
+let taskList = JSON.parse(localStorage.getItem("tasks")) ||[];
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
-const taskDisplayEl = $('#task-display');
-const taskFormEl = $('#task-form');
+// const taskDisplayEl = $('#task-display');
+// const taskFormEl = $('#task-form');
 const toDoInputEl = $('#to-do-input');
 const inProgressInputEl = $('#in-progress-input');
 const doneInputEl = $('#done-input');
+const saveTaskButton = $('#save-task-btn');
+const taskNameInputEl = $('#task-title');
+const projectTypeInputEl = $('#task-info');
+const projectDateInputEl = $('#due-date');
 
-const taskNameInputEl = $('#task-name-input');
-const projectTypeInputEl = $('#project-type-input');
-const projectDateInputEl = $('#taskDueDate');
 
-// function createModalCard(modal) {
-//     const modalCard =$('<div>')
-// .attr('data-task-id', myInput.id);
-// const myModal = document.getElementsByClassName('modal')
-// const myInput = document.getElementsByClassName('modal-content')
-// const btnSuccess = $('<button>').addClass('btn btn-success add task').text('Add Task').attr('data-task-id', modal.id);
-// btnSuccess.on('click', modal.id);
-// const modal = document.getElementById('formModal')
-// formModal.addEventListener.on('hidden.bs.modal',
-//    focus
-// )
-
-// document.querySelectorAll('.btn').forEach(buttonElement => {
-//     const button = bootstrap.Button.getOrCreateInstance(buttonElement)
-//     button.toggle()
-//   })
-
-// }
-
-// const myModalEl = document.getElementById('#formModal')
-// myModalEl.addEventListener('show.bs.modal',  {funtion() {
-//  document.getElementById('#formModal').innerHTML = 'hello';
-//     // do something...   
-// };)
-  
+const form = document.querySelector('form');
 
 
 
 
 
 
-function readTasksFromStorage() {
-    let tasks = JSON.parse(localStorage.getItem('tasks'));
-    if (!tasks) {
-        tasks = [];
-    }
-    return tasks;
-}
-
-function saveTasksToStorage(tasks) {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
 // Todo: create a function to generate a unique task id
 // function generateTaskId() {
 
 // }
-// started using singular task here not sure why
-function createTaskCard(task) {
-    const taskCard = $('<div>')
-// const formModal = document.getElementById('#formModal')
-// const modalContent = document.getElementById('.modal-content')
 
-// formModal.addEventListener('shown.bs.modal', () => {
-//   modalContent.focus()
-// })
-    // i think the my-3 is the spacing in bootstrap
-    .addClass('card task-card draggable my -3')
+function createTaskCard(task) {
+    console.log(task)
+    const taskCard = $('<div>')
+    .addClass('card-body, bg-light')
     .attr('data-task-id', task.id);
     
     const cardHeader = $('<div>').addClass('card-header h4').text(task.name);
-    const cardBody = $('<div>').addClass('card-body');
-    const cardDescription = $('<p>').addClass('card-text').text(task.type);
-    const cardDueDate = $('<p>').addClass('card-text').text(task.dueDate);
-    const cardDeleteBtn = $('<button>').addClass('btn btn-danger delete').text('Delete').attr('data-task-id', task.id);
+    const cardBody = $('<div>').addClass('card-body bg-light');
+    const cardDescription = $('<p>').addClass('card-body bg light').text(task.status);
+    const cardDueDate = $('<p>').addClass('card-body bg-light').text(task.completion);
+    const cardDeleteBtn = $('<button>')
+    .addClass('btn btn-danger delete')
+    .text('Delete')
+    .attr('data-task-id', task.id);
     cardDeleteBtn.on('click', handleDeleteTask);
 
     if (task.dueDate && task.status !== 'done') {
@@ -92,30 +55,27 @@ function createTaskCard(task) {
 
     cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
     taskCard.append(cardHeader, cardBody);
+    console.log(taskCard)
     return taskCard;
-}
+} 
+
 
 function printTaskData() {
-    const tasks = readTasksFromStorage(); 
-
-    const toDoList = $('#todo-cards');
-    toDoList.empty();
-    const inProgressList = $('#in-progress-cards');
-    inProgressList.empty();
-    const doneList = $('#done-cards');
-    doneList.empty();
-
+const tasks = JSON.parse(localStorage.getItem("tasks")) ||[];
+    
     for (let task of tasks) {
+        const tasksEl = createTaskCard(task)
+        console.log(tasksEl)
         if (task.status === 'to-do') {
-            toDoList.append(createTaskCard(task));
+            $('#todo-cards').append(tasksEl);
         } else if (task.status === 'in-progress') {
-            inProgressList.append(createTaskCard(task));
+            $('#in-progress-cards').append(tasksEl);
         } else if (task.status === 'done') {
-            doneList.append(createTaskCard(task));
+           $('#done-cards').append(tasksEl);
         }
     }
 
-$('.draggable').draggable( {
+    $('.draggable').draggable( {
     opacity: 0.7,
     zIndex: 100,
     helper: function (e) {
@@ -127,10 +87,11 @@ $('.draggable').draggable( {
         });
     },
 });
+    
+};
 
 
-}
-
+// localStorage.setItem('readTasksFromStorage', taskList)
 function handleDeleteTask(){
     const taskId= $(this).attr('data-task-id');
     const tasks = readTasksFromStorage();
@@ -139,45 +100,48 @@ function handleDeleteTask(){
         // error made me pluralize tasks for some reason (tasks.splice)
         if (tasks.id === taskId) {
             tasks.splice(tasks.indexOf(task), 1);
+            // the 3rd task here is singular all others above i pluralized
         }
     });
 
     saveTasksToStorage(tasks);
-    printTaskData();
+    printTaskData(tasks);
+    // added the tasks inside the print task 
 }
-
-function handleTaskFormSubmit(event) {
-    event.preventDefault();
-
-    const taskNameInputEl = taskNameInputEl.val().trim();
-    const projectType = projectTypeInputEl.val();
-    const projectDate = projectDateInputEl.val();
-// i may need to delete these 3 lines below
-    const toDo = toDoInputEl.val();
-const inProgress = inProgressInputEl.val();
-const done = doneInputEl.val();
 
 function generateTaskId(){
     
     
-const generateTaskId = {
-    
-    name: taskName,
-    status: projectType,
-    completion: projectDate,
-    status: 'to-do',
-   
-    generateTaskId,
-};
+return `task-${Date.now()}`
 
 }
-const tasks = readTasksFromStorage();
-tasks.push(generateTasks);
 
-saveTasksToStorage(tasks);
+function handleTaskFormSubmit(event) {
+    event.preventDefault();
+    // console.log('hello')
+    const taskNameInput = taskNameInputEl.val().trim();
+    const projectType = projectTypeInputEl.val();
+    const projectDate = projectDateInputEl.val();
+    const newTask = {
+    
+        name: taskNameInput,
+        status: projectType,
+        completion: projectDate,
+        status: 'to-do',
+        id: generateTaskId(),
+    };
+    console.log(newTask)
+    console.log(taskList)
+    taskList.push(newTask)
+    localStorage.setItem('tasks', JSON.stringify(taskList));
+
+    createTaskCard(taskList)
+
+
+
 
 printTaskData();
-
+$('#formModal').modal('hide')
 toDoInputEl.val('');
 inProgressInputEl.val('');
 doneInputEl.val('');
@@ -188,9 +152,9 @@ function handleDrop(event, ui) {
     const tasks = readTasksFromStorage();
     const taskId = ui.draggable[0].dataset.taskId;
     const newStatus = event.target.id;
-    for (let task of tasks) {
-        if (task.id === taskId) {
-            task.status = newStatus;
+    for (let tasks of tasks) {
+        if (tasks.id === taskId) {
+            tasks.status = newStatus;
         }
     }
 
@@ -198,10 +162,21 @@ function handleDrop(event, ui) {
     printTaskData();
 }
 
-taskFormEl.on('submit', handleTaskFormSubmit);
-taskDisplayEl.on('click', '.btn-delete-task', handleDeleteTask);
+
 $(document).ready(function () {
-    printTaskData();
+    saveTaskButton.on('click', handleTaskFormSubmit);
+projectDateInputEl.on('click', '.btn-delete-task', handleDeleteTask);
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const obj = Object.fromEntries(fd);
+    
+        const json = JSON.stringify(obj);
+        localStorage.setItem('form', json);
+    
+        window.localStorage.href = "tasks";
+    })
+    // printTaskData();
     $('#taskDueDate').datepicker({
         changeMonth: true,
         changeYear: true,

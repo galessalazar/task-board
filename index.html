@@ -21,64 +21,52 @@
     <h1 class="display-3">Task Board</h1>
     <p class="lead">A simple Kanban board for task management</p>
   </header>
-<section class="bg-light">
+
+  
   <div class="container">
     <div class="text-center mb-5">
-      <!-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button> -->
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
-  </section>
 
-  <div class="modal" data-bs-target="formModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true"></div>
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-title">Add Task</h5>
-            
-            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> -->
-              <!-- <span aria-hidden="true">&times;</span> -->
-            </button>
-            <!-- <form id="task-form">
-              <ul class="list-group list-group-flush">
-                <li class="'list-group-item">
-                  <input id="task-name-input"
-                  type="text"
-                  class="form-control"
-                  placeholder="Task Title"
-                  aria-label="Task Title"
-                  />
-              </ul> -->
-          </div>
-          <div class="modal-body">
-            <form id="task-form">
-            
-            <label for="task-info" class="form-label">Title</label>
-            <input type="text" class="form-control" id="task-title" placeholder="Your-task-Description">
-            
-            
-            <label for="due-date" class="form-label">Due Date</label>
-            <input type="text" class="form-control" id="due-date" placeholder="Your-task-Description">
+    
 
-            
-            <label for="task-description" class="form-label">Description</label>
-            <input type="text" class="form-control" id="task-info" placeholder="Your-task-Description">
-            </form>
-          </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-         
-          </div>
-          
-        </div>
+<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title">Add Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-    </div> 
 
+
+      <div class="modal-body">
+        <form id="task-form">
     
+          <label for="task-info" class="form-label">Title</label>
+          <input type="text" class="form-control" id="task-title" placeholder="Your-task-Description">
 
-    
+          <label for="due-date" class="form-label">Due Date</label>
+          <input type="datetime-local"  id="due-date" placeholder="Your-task-Description"><br>
 
-    <!-- <div class="modal" tabindex="-1" role="dialog"></div> -->
+          <label for="task-description" class="form-label">Description</label>
+          <input type="text" class="form-control" id="task-info" placeholder="Your-task-Description">
+
+       
+      </div>
+
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="save-task-btn">Save</button>
+      </div>
+       </form>
+    </div>
+  </div>
+</div>
+
+ <!-- <div class="modal" tabindex="-1" role="dialog"></div> -->
     <!-- Todo: Create a modal with a form to add tasks -->
     
     <div class="row swim-lanes text-center justify-content-between">
@@ -92,14 +80,7 @@
           </div>
         </div>
       </div>
-<!-- idk if i should change the below and i added the id to task-card -->
-      <!-- <div class="card-header bg-white" style="width: 18rem>;
-         <img src="..." class="card-img-top" alt="...">  
-        <div class="card-body bg-light">
-          <h5 class="card-title mb-1">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <button type="submit" class="btn btn-custom"> -->
-          <!-- <a href="#" class="btn btn-primary">Delete</a> -->
+
         </div>
       </div>
       <div class="col-12 col-lg-4 d-flex">
