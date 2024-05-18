@@ -3,6 +3,10 @@
 
 This is a tool to assist in keeping up with all assignments due. 
 
+![alt text](image.png)
+
+![alt text](image-1.png)
+
 
 ## Acknowledgements
 
